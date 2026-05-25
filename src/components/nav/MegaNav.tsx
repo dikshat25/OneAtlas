@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Menu, X, ChevronDown, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { navItems } from '@/data/nav'
@@ -9,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { MobileDrawer } from './MobileDrawer'
 
 export function MegaNav() {
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -18,6 +20,8 @@ export function MegaNav() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  if (pathname?.startsWith('/builder')) return null
 
   return (
     <header
