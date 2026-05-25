@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String?
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  projects  Project[]
+}
+
+model Template {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  category    String
+  complexity  String
+  description String
+  tags        String[]
+  fields      String[]
+  schema      Json     // The default ComponentNode tree
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  projects    Project[]
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  schema      Json     // The active ComponentNode tree
+  version     Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  
+  templateId  String?
+  template    Template? @relation(fields: [templateId], references: [id])
+}
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  order     Int      @default(0)
+}
+
+model PricingPlan {
+  id          String   @id @default(cuid())
+  name        String
+  price       String
+  period      String?
+  description String
+  isPopular   Boolean  @default(false)
+  features    Json     // Array of {text: string, included: boolean}
+  order       Int      @default(0)
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  excerpt     String
+  content     String   @db.Text
+  authorName  String
+  category    String
+  readTime    String
+  createdAt   DateTime @default(now())
+}
+
+model SupportTicket {
+  id        String   @id @default(cuid())
+  email     String
+  subject   String
+  message   String   @db.Text
+  status    String   @default("OPEN")
+  createdAt DateTime @default(now())
+}

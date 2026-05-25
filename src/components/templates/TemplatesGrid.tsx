@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { templates } from '@/data/templates'
+import { createProjectFromTemplate } from '@/app/actions/project'
 import { Button } from '@/components/ui/button'
 
 const categories = ['All', 'CRM & Sales', 'HR & People', 'Admin & Internal', 'Analytics & Data', 'Finance & Accounting', 'Operations', 'Customer Support', 'Project Management']
@@ -10,14 +10,27 @@ const complexities = ['All', 'Simple', 'Moderate', 'Advanced']
 
 interface TemplatesGridProps {
   searchQuery: string
+  templates: any[]
 }
 
-export function TemplatesGrid({ searchQuery }: TemplatesGridProps) {
+export function TemplatesGrid({ searchQuery, templates }: TemplatesGridProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const [isCreating, setIsCreating] = useState<string | null>(null)
   
   const selectedCategory = searchParams.get('category') || 'All'
   const selectedComplexity = searchParams.get('complexity') || 'All'
+
+  const handleCreateProject = async (templateId: string) => {
+    setIsCreating(templateId)
+    const result = await createProjectFromTemplate(templateId)
+    if (result.error) {
+      alert(result.error)
+      setIsCreating(null)
+    } else {
+      router.push(`/builder/${result.projectId}`)
+    }
+  }
 
   const updateFilters = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -131,7 +144,13 @@ export function TemplatesGrid({ searchQuery }: TemplatesGridProps) {
                     {template.description}
                   </p>
                   
-                  <Button className="w-full bg-gradient-brand hover:opacity-90 text-white">Use Template</Button>
+                  <Button 
+                    className="w-full bg-gradient-brand hover:opacity-90 text-white"
+                    onClick={() => handleCreateProject(template.id)}
+                    disabled={isCreating === template.id}
+                  >
+                    {isCreating === template.id ? 'Creating...' : 'Use Template'}
+                  </Button>
                 </div>
               </div>
             ))}

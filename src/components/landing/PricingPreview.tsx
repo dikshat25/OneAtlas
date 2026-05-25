@@ -1,11 +1,10 @@
 'use client'
 
 import React from 'react'
-import { plans } from '@/data/pricing'
-import { Button } from '@/components/ui/button'
 import { Check, X } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
-export function PricingPreview() {
+export function PricingPreview({ plans }: { plans: any[] }) {
   return (
     <section className="py-24 bg-background relative border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,18 +36,25 @@ export function PricingPreview() {
               </div>
               
               <ul className="space-y-4 mb-8 flex-1">
-                {plan.features.map((feature, j) => (
-                  <li key={j} className="flex items-start gap-3 text-sm">
-                    {feature.included ? (
-                      <Check className="w-5 h-5 text-green shrink-0" />
-                    ) : (
-                      <X className="w-5 h-5 text-muted/30 shrink-0" />
-                    )}
-                    <span className={feature.included ? 'text-heading font-medium' : 'text-muted'}>
-                      {feature.text}
-                    </span>
-                  </li>
-                ))}
+                  {typeof plan.features === 'string' ? JSON.parse(plan.features).map((feature: any, i: number) => (
+                    <li key={i} className="flex items-center gap-3">
+                      {feature.included ? (
+                        <Check className="w-5 h-5 text-green shrink-0" />
+                      ) : (
+                        <X className="w-5 h-5 text-muted shrink-0 opacity-50" />
+                      )}
+                      <span className={feature.included ? 'text-body' : 'text-muted'}>{feature.text}</span>
+                    </li>
+                  )) : plan.features.map((feature: any, i: number) => (
+                    <li key={i} className="flex items-center gap-3">
+                      {feature.included ? (
+                        <Check className="w-5 h-5 text-green shrink-0" />
+                      ) : (
+                        <X className="w-5 h-5 text-muted shrink-0 opacity-50" />
+                      )}
+                      <span className={feature.included ? 'text-body' : 'text-muted'}>{feature.text}</span>
+                    </li>
+                  ))}
               </ul>
               
               <Button 

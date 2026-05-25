@@ -1,12 +1,22 @@
 'use client'
 
-import React from 'react'
-import { Play, Share, Download, Smartphone, Monitor } from 'lucide-react'
+import React, { useState } from 'react'
+import { Play, Share, FileCode2, Download, Save, Loader2, Smartphone, Monitor } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useBuilderStore } from '@/store/builderStore'
+import { saveProjectSchema } from '@/app/actions/project'
 
-export function BuilderToolbar() {
-  const { isSimulating, setIsSimulating } = useBuilderStore()
+export function BuilderToolbar({ projectId }: { projectId?: string }) {
+  const { isSimulating, setIsSimulating, rootNode } = useBuilderStore()
+  const [isSaving, setIsSaving] = useState(false)
+
+  const handleSave = async () => {
+    if (!projectId) return
+    setIsSaving(true)
+    const result = await saveProjectSchema(projectId, rootNode)
+    if (result.error) alert(result.error)
+    setIsSaving(false)
+  }
 
   return (
     <div className="h-14 border-b border-border bg-white flex items-center justify-between px-4 shrink-0 shadow-sm z-10">
@@ -27,6 +37,16 @@ export function BuilderToolbar() {
       </div>
       
       <div className="flex items-center gap-3">
+        {projectId && (
+          <Button variant="ghost" size="sm" onClick={handleSave} disabled={isSaving} className="text-body hover:text-primary hidden md:flex">
+            {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
+            Save
+          </Button>
+        )}
+        <Button variant="ghost" size="sm" className="text-body hover:text-primary hidden md:flex">
+          <FileCode2 className="w-4 h-4 mr-2" />
+          Code
+        </Button>
         <Button 
           variant={isSimulating ? 'default' : 'outline'}
           size="sm"

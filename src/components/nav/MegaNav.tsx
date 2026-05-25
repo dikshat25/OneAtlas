@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useSession, signIn, signOut } from 'next-auth/react'
 import { Menu, X, ChevronDown, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { navItems } from '@/data/nav'
@@ -11,6 +12,7 @@ import { MobileDrawer } from './MobileDrawer'
 
 export function MegaNav() {
   const pathname = usePathname()
+  const { data: session } = useSession()
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -85,17 +87,32 @@ export function MegaNav() {
 
           {/* CTAs */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Link 
-              href="/login" 
-              className="text-sm font-medium text-body hover:text-primary transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm px-2"
-            >
-              Login
-            </Link>
-            <Button 
-              className="bg-gradient-brand hover:opacity-90 text-white rounded-full transition-transform hover:scale-105"
-            >
-              Start Building
-            </Button>
+            {session ? (
+              <>
+                <span className="text-sm font-medium text-body">{session.user?.name || session.user?.email}</span>
+                <button 
+                  onClick={() => signOut()} 
+                  className="text-sm font-medium text-body hover:text-primary transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm px-2"
+                >
+                  Sign Out
+                </button>
+                <Button asChild className="rounded-full bg-gradient-brand text-white hover:shadow-lg hover:shadow-primary/20 transition-all hover:-translate-y-0.5 border-0">
+                  <Link href="/dashboard">My Apps</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <button 
+                  onClick={() => signIn()} 
+                  className="text-sm font-medium text-body hover:text-primary transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm px-2"
+                >
+                  Login
+                </button>
+                <Button asChild className="rounded-full bg-gradient-brand text-white hover:shadow-lg hover:shadow-primary/20 transition-all hover:-translate-y-0.5 border-0">
+                  <Link href="/templates">Start Building</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
