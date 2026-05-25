@@ -1,0 +1,176 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+
+  /* Brand */
+  --color-primary: #635BFF;
+  --color-primary-light: #7A73FF;
+  --color-primary-dark: #0A2540;
+  --color-navy: #1A1F36;
+
+  /* Accent */
+  --color-pink: #FF5996;
+  --color-orange: #FFB17A;
+  --color-teal: #00D4B1;
+  --color-cyan: #00D4FF;
+  --color-yellow: #F8BC42;
+  --color-lavender: #E8E7FF;
+  --color-green: #00A37A;
+  --color-blue: #00B8E6;
+
+  /* Text */
+  --color-heading: #0A2540;
+  --color-body: #425466;
+  --color-muted: #697386;
+
+  /* Backgrounds */
+  --color-bg-primary: #FAFBFF;
+  --color-bg-secondary: #F6F9FC;
+  --color-bg-tertiary: #EFF3F8;
+  --color-bg-white: #FFFFFF;
+
+  /* Borders */
+  --color-border-default: #E3E8EE;
+  --color-border-light: #EDF1F6;
+
+  /* Soft tints */
+  --color-tint-teal: #E0FBF4;
+  --color-tint-orange: #FFE9DC;
+  --color-tint-pink: #FFE3EE;
+  --color-tint-yellow: #FFF4DE;
+
+  /* Gradient */
+  --background-image-gradient-brand: linear-gradient(135deg, #635BFF, #9B6CFB, #FF5996, #FF9173);
+
+  /* shadcn UI */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* OneAtlas Design System base variables */
+  --background: #FAFBFF;
+  --foreground: #1A1F36;
+  
+  --card: #FFFFFF;
+  --card-foreground: #1A1F36;
+  
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1F36;
+  
+  --primary: #635BFF;
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #F6F9FC;
+  --secondary-foreground: #1A1F36;
+  
+  --muted: #F6F9FC;
+  --muted-foreground: #697386;
+  
+  --accent: #E8E7FF;
+  --accent-foreground: #1A1F36;
+  
+  --destructive: #FF5996;
+  --destructive-foreground: #FFFFFF;
+  
+  --border: #E3E8EE;
+  --input: #E3E8EE;
+  --ring: #635BFF;
+  
+  --radius: 0.5rem;
+  
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1A1F36;
+  --sidebar-primary: #635BFF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F6F9FC;
+  --sidebar-accent-foreground: #1A1F36;
+  --sidebar-border: #E3E8EE;
+  --sidebar-ring: #635BFF;
+
+  /* Custom UI Variables */
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --nav-blur: blur(12px);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.dark {
+  /* Dark mode overrides (fallback for dark variants) */
+  --background: #0A2540;
+  --foreground: #FAFBFF;
+  --card: #1A1F36;
+  --card-foreground: #FAFBFF;
+  --popover: #1A1F36;
+  --popover-foreground: #FAFBFF;
+  --primary: #7A73FF;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1A1F36;
+  --secondary-foreground: #FAFBFF;
+  --muted: #1A1F36;
+  --muted-foreground: #697386;
+  --accent: #E8E7FF;
+  --accent-foreground: #0A2540;
+  --destructive: #FF5996;
+  --destructive-foreground: #FFFFFF;
+  --border: #1A1F36;
+  --input: #1A1F36;
+  --ring: #7A73FF;
+  --sidebar: #0A2540;
+  --sidebar-foreground: #FAFBFF;
+  --sidebar-primary: #7A73FF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1A1F36;
+  --sidebar-accent-foreground: #FAFBFF;
+  --sidebar-border: #1A1F36;
+  --sidebar-ring: #7A73FF;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
