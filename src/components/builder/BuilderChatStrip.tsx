@@ -32,7 +32,7 @@ export function BuilderChatStrip() {
     
     // Typing indicator
     setIsTyping(true)
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await new Promise(resolve => setTimeout(resolve, 1200))
     setIsTyping(false)
 
     // Generate mock response based on keywords
@@ -40,16 +40,16 @@ export function BuilderChatStrip() {
     let responseText = `Applied your edit. Schema updated to v${version + 1}.`
 
     if (lowerInput.includes('add')) {
-      // Very naive extraction for the mock: just take the word after 'add'
       const match = lowerInput.match(/add (\w+)/)
       const field = match ? match[1] : 'Button'
       responseText = `Added ${field} to the schema. Schema updated to v${version + 1}.`
       
-      // Inject mock node!
+      // Inject mock node
       setSchema([...schema, {
         id: `mock-${Date.now()}`,
-        type: 'Button',
-        props: { children: `New ${field}`, variant: 'default' }
+        name: field.charAt(0).toUpperCase() + field.slice(1),
+        type: 'default',
+        props: { title: `New ${field}` }
       }])
 
     } else if (lowerInput.includes('remove') || lowerInput.includes('delete')) {
@@ -57,14 +57,9 @@ export function BuilderChatStrip() {
       const comp = match ? match[1] : 'component'
       responseText = `Removed ${comp}. Schema updated to v${version + 1}.`
       
-      // Pop last node if possible
       if (schema.length > 0) {
         setSchema(schema.slice(0, -1))
       }
-    } else if (lowerInput.includes('rename')) {
-      responseText = `Renamed successfully. Schema updated to v${version + 1}.`
-    } else if (lowerInput.includes('move') || lowerInput.includes('reorder')) {
-      responseText = `Reordered components. Schema updated to v${version + 1}.`
     }
 
     setMessages(prev => [...prev, { id: Date.now().toString(), role: 'ai', content: responseText }])
@@ -79,16 +74,16 @@ export function BuilderChatStrip() {
   }
 
   return (
-    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-20 flex flex-col gap-4">
+    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full max-w-[640px] px-4 z-20 flex flex-col gap-3">
       {/* Chat History */}
       {messages.length > 0 && (
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-card border border-[#E5E7EB] max-h-[400px] overflow-y-auto p-4 flex flex-col gap-4 mb-2">
+        <div className="bg-[#FAFAFA]/95 backdrop-blur-md rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-border max-h-[360px] overflow-y-auto p-5 flex flex-col gap-4 custom-scrollbar">
           {messages.map(msg => (
             <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`px-4 py-2.5 rounded-2xl max-w-[85%] text-[14px] ${
+              <div className={`px-4 py-2.5 max-w-[85%] text-[14px] leading-relaxed shadow-sm ${
                 msg.role === 'user' 
-                  ? 'bg-[#FF6600] text-white rounded-br-sm' 
-                  : 'bg-[#F5F5EE] text-[#111111] rounded-bl-sm border border-[#E5E7EB]'
+                  ? 'bg-primary text-white rounded-2xl rounded-tr-sm' 
+                  : 'bg-white text-heading rounded-2xl rounded-tl-sm border border-border'
               }`}>
                 {msg.content}
               </div>
@@ -96,10 +91,10 @@ export function BuilderChatStrip() {
           ))}
           {isTyping && (
             <div className="flex justify-start">
-              <div className="px-4 py-3 rounded-2xl bg-[#F5F5EE] text-[#111111] rounded-bl-sm border border-[#E5E7EB] flex items-center gap-1">
-                <div className="w-1.5 h-1.5 bg-[#111111]/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                <div className="w-1.5 h-1.5 bg-[#111111]/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-1.5 h-1.5 bg-[#111111]/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div className="px-4 py-3.5 bg-white text-heading rounded-2xl rounded-tl-sm border border-border shadow-sm flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 bg-muted rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-1.5 h-1.5 bg-muted rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-1.5 h-1.5 bg-muted rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           )}
@@ -108,19 +103,19 @@ export function BuilderChatStrip() {
       )}
 
       {/* Input */}
-      <div className="bg-white rounded-full shadow-hover border border-[#E5E7EB] flex items-center p-2 pl-4 transition-all focus-within:border-[#D1D5DB]">
-        <Sparkles className="w-5 h-5 text-[#FF6600] shrink-0" />
+      <div className="bg-white rounded-[24px] shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-border flex items-center p-2 pl-5 transition-all focus-within:border-[#D1D5DB] focus-within:shadow-[0_12px_48px_rgba(0,0,0,0.12)]">
+        <Sparkles className="w-5 h-5 text-primary shrink-0" />
         <input 
           type="text" 
-          placeholder="Describe changes to the layout or components..."
-          className="flex-1 bg-transparent border-none outline-none px-4 text-sm text-heading placeholder:text-muted"
+          placeholder="Ask OneAtlas to build or modify something..."
+          className="flex-1 bg-transparent border-none outline-none px-4 text-[15px] font-medium text-heading placeholder:text-muted placeholder:font-normal"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
         />
         <button 
-          className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-            input.trim() ? 'bg-[#FF6600] text-white' : 'bg-[#F5F5EE] text-[#9CA3AF] cursor-not-allowed border border-[#E5E7EB]'
+          className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors shadow-sm ${
+            input.trim() ? 'bg-primary text-white hover:bg-primary/90' : 'bg-[#FAFAFA] text-muted cursor-not-allowed border border-border'
           }`}
           disabled={!input.trim()}
           onClick={handleSend}
@@ -131,4 +126,3 @@ export function BuilderChatStrip() {
     </div>
   )
 }
-

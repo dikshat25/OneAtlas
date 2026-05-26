@@ -30,7 +30,7 @@ export function MegaNav() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 h-[72px] transition-all duration-200 ease-in-out',
         isScrolled
-          ? 'bg-[#F5F5EE]/92 backdrop-blur-md border-b border-[#E5E7EB]'
+          ? 'bg-background/92 backdrop-blur-md border-b border-border'
           : 'bg-transparent border-transparent'
       )}
     >
@@ -39,7 +39,7 @@ export function MegaNav() {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center gap-2 group outline-none">
-              <span className="text-[20px] font-bold text-[#111111] tracking-tight">
+              <span className="text-[20px] font-bold text-foreground tracking-tight">
                 OneAtlas
               </span>
             </Link>
@@ -59,7 +59,7 @@ export function MegaNav() {
                 >
                   <Link
                     href={item.href}
-                    className="flex items-center text-[15px] font-medium text-[#4B5563] hover:text-[#111111] transition-colors"
+                    className="flex items-center text-[15px] font-medium text-[#4B5563] hover:text-foreground transition-colors"
                   >
                     {item.label}
                     {hasDropdown && <ChevronDown className="ml-1 h-[14px] w-[14px] opacity-60" />}
@@ -68,7 +68,7 @@ export function MegaNav() {
                   {/* Dropdowns */}
                   {hasDropdown && activeDropdown === item.label && (
                     <div className="absolute top-[72px] left-1/2 -translate-x-1/2 pt-1">
-                      <div className="bg-white rounded-2xl shadow-card border border-[#E5E7EB] overflow-hidden">
+                      <div className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
                         {item.label === 'Templates' && <TemplatesDropdown />}
                         {item.label === 'Product' && <ProductDropdown />}
                         {item.label === 'Use Cases' && <UseCasesDropdown />}
@@ -84,18 +84,18 @@ export function MegaNav() {
 
           {/* Right Actions */}
           <div className="hidden lg:flex items-center gap-6">
-            <Link href="/support" className="text-[15px] font-medium text-[#4B5563] hover:text-[#111111] transition-colors">
+            <Link href="/support" className="text-[15px] font-medium text-[#4B5563] hover:text-foreground transition-colors">
               Contact Sales
             </Link>
             {session ? (
               <>
                 <button 
                   onClick={() => signOut()} 
-                  className="text-[15px] font-medium text-[#4B5563] hover:text-[#111111] transition-colors"
+                  className="text-[15px] font-medium text-[#4B5563] hover:text-foreground transition-colors"
                 >
                   Sign Out
                 </button>
-                <Button asChild className="h-10 px-4 text-[14px] rounded-xl bg-[#FF6600] text-white hover:bg-[#E65C00] transition-colors">
+                <Button asChild className="h-10 px-4 text-[14px] rounded-xl bg-primary text-white hover:bg-primary/90 transition-colors">
                   <Link href="/dashboard">My Apps</Link>
                 </Button>
               </>
@@ -103,11 +103,11 @@ export function MegaNav() {
               <>
                 <button 
                   onClick={() => signIn()} 
-                  className="text-[15px] font-medium text-[#4B5563] hover:text-[#111111] transition-colors"
+                  className="text-[15px] font-medium text-[#4B5563] hover:text-foreground transition-colors"
                 >
                   Login
                 </button>
-                <Button asChild className="h-10 px-4 text-[14px] rounded-xl bg-[#FF6600] text-white hover:bg-[#E65C00] transition-colors">
+                <Button asChild className="h-10 px-4 text-[14px] rounded-xl bg-primary text-white hover:bg-primary/90 transition-colors">
                   <Link href="/builder">Start Building</Link>
                 </Button>
               </>
@@ -139,7 +139,7 @@ function TemplatesDropdown() {
         <ul className="space-y-3">
           {['CRM', 'HR', 'Admin', 'Analytics', 'Inventory', 'Support'].map(item => (
             <li key={item}>
-              <Link href={`/templates?category=${item.toLowerCase()}`} className="text-[15px] text-[#6B7280] hover:text-[#111111] transition-colors block">
+              <Link href={`/templates?category=${item.toLowerCase()}`} className="text-[15px] text-muted-foreground hover:text-foreground transition-colors block">
                 {item}
               </Link>
             </li>
@@ -151,7 +151,7 @@ function TemplatesDropdown() {
         <ul className="space-y-3 mb-6">
           {['Simple', 'Moderate', 'Advanced'].map(item => (
             <li key={item}>
-              <Link href={`/templates?complexity=${item.toLowerCase()}`} className="text-[15px] text-[#6B7280] hover:text-[#111111] transition-colors block">
+              <Link href={`/templates?complexity=${item.toLowerCase()}`} className="text-[15px] text-muted-foreground hover:text-foreground transition-colors block">
                 {item}
               </Link>
             </li>
@@ -163,10 +163,10 @@ function TemplatesDropdown() {
         <div className="space-y-4">
           {[1, 2, 3].map(i => (
             <div key={i} className="flex gap-4 items-center group cursor-pointer">
-              <div className="w-12 h-12 bg-[#F5F5EE] rounded-[12px] border border-[#ECECEC] group-hover:border-[#D1D5DB] transition-colors" />
+              <div className="w-12 h-12 bg-background rounded-[12px] border border-muted group-hover:border-input transition-colors" />
               <div>
-                <p className="text-[15px] font-medium text-[#111111]">Template {i}</p>
-                <p className="text-[13px] text-[#9CA3AF]">Business Ops</p>
+                <p className="text-[15px] font-medium text-foreground">Template {i}</p>
+                <p className="text-[13px] text-muted">Business Ops</p>
               </div>
             </div>
           ))}
@@ -181,17 +181,17 @@ function ProductDropdown() {
     <div className="w-[600px] p-8 grid grid-cols-2 gap-8">
       <div className="space-y-6">
         <div>
-          <h4 className="text-[15px] font-medium text-[#111111]">Runtime-Generated Apps</h4>
-          <p className="text-[14px] text-[#6B7280] mt-1">Apps stay editable after generation. Not static exports.</p>
+          <h4 className="text-[15px] font-medium text-foreground">Runtime-Generated Apps</h4>
+          <p className="text-[14px] text-muted-foreground mt-1">Apps stay editable after generation. Not static exports.</p>
         </div>
         <div>
-          <h4 className="text-[15px] font-medium text-[#111111]">Multi-Model AI Gateway</h4>
-          <p className="text-[14px] text-[#6B7280] mt-1">Route to the right model for every task.</p>
+          <h4 className="text-[15px] font-medium text-foreground">Multi-Model AI Gateway</h4>
+          <p className="text-[14px] text-muted-foreground mt-1">Route to the right model for every task.</p>
         </div>
       </div>
-      <div className="bg-[#FAFAFA] border border-[#ECECEC] p-6 rounded-[16px] flex flex-col justify-end">
-        <h3 className="text-[16px] font-semibold text-[#111111] mb-2">What's new in v2</h3>
-        <p className="text-[14px] text-[#6B7280] mb-4">Enterprise RBAC and custom domains are now live.</p>
+      <div className="bg-secondary border border-muted p-6 rounded-[16px] flex flex-col justify-end">
+        <h3 className="text-[16px] font-semibold text-foreground mb-2">What's new in v2</h3>
+        <p className="text-[14px] text-muted-foreground mb-4">Enterprise RBAC and custom domains are now live.</p>
         <Button asChild variant="secondary" size="sm" className="w-fit text-[13px]">
           <Link href="/blog">Read Announcement</Link>
         </Button>
@@ -205,8 +205,8 @@ function UseCasesDropdown() {
     <div className="w-[400px] p-8 grid grid-cols-2 gap-x-6 gap-y-6">
       {['Operations', 'HR & People', 'Finance', 'Customer Support', 'Founders', 'Product Managers'].map(item => (
         <Link key={item} href={`/templates?category=${item.toLowerCase().split(' ')[0]}`} className="group block">
-          <h4 className="text-[15px] font-medium text-[#111111] group-hover:text-[#FF6600] transition-colors">{item}</h4>
-          <p className="text-[13px] text-[#9CA3AF] mt-1">Build {item.toLowerCase()} apps</p>
+          <h4 className="text-[15px] font-medium text-foreground group-hover:text-primary transition-colors">{item}</h4>
+          <p className="text-[13px] text-muted mt-1">Build {item.toLowerCase()} apps</p>
         </Link>
       ))}
     </div>
@@ -220,13 +220,13 @@ function ResourcesDropdown() {
         <Link 
           key={item} 
           href={item === 'Help Center' ? '/support' : item === 'Updates' ? '/blog' : `/${item.toLowerCase().replace(' ', '-')}`} 
-          className="block px-6 py-2.5 text-[15px] text-[#4B5563] hover:bg-[#FAFAFA] hover:text-[#111111]"
+          className="block px-6 py-2.5 text-[15px] text-[#4B5563] hover:bg-secondary hover:text-foreground"
         >
           {item}
         </Link>
       ))}
-      <div className="h-px bg-[#ECECEC] my-2" />
-      <Link href="#" className="flex items-center justify-between px-6 py-2.5 text-[15px] text-[#4B5563] hover:bg-[#FAFAFA] hover:text-[#111111]">
+      <div className="h-px bg-muted my-2" />
+      <Link href="#" className="flex items-center justify-between px-6 py-2.5 text-[15px] text-[#4B5563] hover:bg-secondary hover:text-foreground">
         YouTube <ExternalLink className="h-3 w-3" />
       </Link>
     </div>
@@ -237,7 +237,7 @@ function CommunityDropdown() {
   return (
     <div className="w-[200px] py-2">
       {['Discord', 'LinkedIn', 'Twitter / X', 'Reddit', 'GitHub', 'Instagram'].map(item => (
-        <Link key={item} href="#" className="block px-6 py-2.5 text-[15px] text-[#4B5563] hover:bg-[#FAFAFA] hover:text-[#111111]">
+        <Link key={item} href="#" className="block px-6 py-2.5 text-[15px] text-[#4B5563] hover:bg-secondary hover:text-foreground">
           {item}
         </Link>
       ))}

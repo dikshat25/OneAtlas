@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} bg-primary text-primary antialiased selection:bg-accent/20 selection:text-accent min-h-screen flex flex-col relative`}>
+      <body className={`${inter.variable} bg-background text-foreground antialiased selection:bg-accent/20 selection:text-primary min-h-screen flex flex-col relative`}>
         <AuthProvider>
           <MegaNav />
           <main className="flex-1 relative">{children}</main>

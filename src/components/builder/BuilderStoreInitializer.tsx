@@ -9,6 +9,8 @@ export function BuilderStoreInitializer({ schema, projectId }: { schema: any, pr
   useEffect(() => {
     if (schema && Array.isArray(schema.nodes)) {
       setSchema(schema.nodes)
+    } else if (schema && Array.isArray(schema.components)) {
+      setSchema(schema.components)
     } else if (schema && Array.isArray(schema)) {
       setSchema(schema)
     }

@@ -97,7 +97,7 @@ export function TemplateModal({ template, isOpen, onClose }: TemplateModalProps)
           </div>
           
           <div className="mt-auto pt-6 border-t border-border flex items-center gap-4">
-            <Button asChild className="flex-1 bg-gradient-brand text-white shadow-purple hover:shadow-lg">
+            <Button asChild className="flex-1 bg-primary hover:bg-primary/95 text-white shadow-sm">
               <Link href={`/builder?template=${template.id}`}>Use This Template</Link>
             </Button>
             <Button variant="outline" onClick={onClose} className="px-6">Cancel</Button>

@@ -202,7 +202,7 @@ export function TemplatesGrid({ templates }: TemplatesGridProps) {
                   
                   <div className="flex items-center gap-3">
                     <Button 
-                      className="flex-1 bg-gradient-brand hover:opacity-90 text-white shadow-purple"
+                      className="flex-1 bg-primary hover:bg-primary/95 text-white shadow-sm"
                       onClick={() => handleCreateProject(template.id)}
                       disabled={isCreating === template.id}
                     >

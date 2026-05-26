@@ -6,44 +6,102 @@ datasource db {
   provider = "postgresql"
 }
 
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[]
+  apps      App[]
+}
+
 model User {
-  id        String    @id @default(cuid())
-  name      String?
-  email     String    @unique
-  password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  projects  Project[]
+  id             String        @id @default(cuid())
+  email          String        @unique
+  password       String
+  name           String?
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  apps           App[]
 }
 
 model Template {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  name        String
-  category    String
-  complexity  String
-  description String
-  tags        String[]
-  fields      String[]
-  schema      Json     // The default ComponentNode tree
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  projects    Project[]
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  category      String
+  complexity    String   @default("Simple")
+  description   String
+  tags          String[]
+  fields        String[]
+  schemaDefault Json
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  apps          App[]
 }
 
-model Project {
+model App {
+  id             String          @id @default(cuid())
+  name           String
+  slug           String          @unique
+  templateId     String?
+  template       Template?       @relation(fields: [templateId], references: [id])
+  userId         String?
+  user           User?           @relation(fields: [userId], references: [id])
+  organizationId String?
+  organization   Organization?   @relation(fields: [organizationId], references: [id])
+  currentSchema  Json
+  schemaVersion  Int             @default(1)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  versions       SchemaVersion[]
+  deployments    Deployment[]
+  mutations      Mutation[]
+  previews       Preview[]
+}
+
+model SchemaVersion {
+  id        String   @id @default(cuid())
+  appId     String
+  app       App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+  version   Int
+  schema    Json
+  createdAt DateTime @default(now())
+}
+
+model Deployment {
+  id        String   @id @default(cuid())
+  appId     String
+  app       App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+  version   Int
+  status    String
+  url       String
+  createdAt DateTime @default(now())
+}
+
+model Mutation {
   id          String   @id @default(cuid())
-  name        String
-  schema      Json     // The active ComponentNode tree
-  version     Int      @default(1)
+  appId       String
+  app         App      @relation(fields: [appId], references: [id], onDelete: Cascade)
+  instruction String
+  type        String
+  result      String
+  version     Int
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  
-  templateId  String?
-  template    Template? @relation(fields: [templateId], references: [id])
+}
+
+model Preview {
+  id        String    @id @default(cuid())
+  appId     String
+  app       App       @relation(fields: [appId], references: [id], onDelete: Cascade)
+  token     String    @unique @default(cuid())
+  schema    Json
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
 }
 
 model FAQ {

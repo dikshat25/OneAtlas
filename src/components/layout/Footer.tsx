@@ -10,12 +10,12 @@ export function Footer() {
   if (pathname?.startsWith('/builder')) return null
 
   return (
-    <footer className="bg-navy pt-20 pb-10 border-t border-border">
+    <footer className="bg-black pt-20 pb-10 border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-16">
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6 outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm w-fit">
-              <div className="w-8 h-8 rounded-lg bg-gradient-brand flex items-center justify-center text-white font-bold text-lg">
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">
                 O
               </div>
               <span className="text-xl font-bold text-white">OneAtlas</span>

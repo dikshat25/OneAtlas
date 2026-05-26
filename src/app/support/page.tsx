@@ -59,7 +59,7 @@ export default function SupportPage() {
             </div>
           </div>
 
-          <Button type="submit" disabled={status === 'loading'} className="w-full bg-gradient-brand hover:opacity-90 text-white rounded-lg py-6 mt-2">
+          <Button type="submit" disabled={status === 'loading'} className="w-full bg-primary hover:bg-primary/95 text-white rounded-lg py-6 mt-2">
             {status === 'loading' ? 'Submitting...' : 'Submit Ticket'}
           </Button>
         </div>

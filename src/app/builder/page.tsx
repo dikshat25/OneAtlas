@@ -6,43 +6,80 @@ import prisma from '@/lib/prisma'
 export default async function BuilderIndexPage({
   searchParams,
 }: {
-  searchParams: Promise<{ template?: string }>
+  searchParams: Promise<{ template?: string; appId?: string }>
 }) {
   const session = await getServerSession(authOptions)
   
-  if (!session || !session.user) {
+  if (!session || !session.user || !session.user.email) {
+    redirect('/api/auth/signin?callbackUrl=/builder')
+  }
+
+  const dbUser = await prisma.user.findUnique({
+    where: { email: session.user.email }
+  })
+
+  if (!dbUser) {
     redirect('/api/auth/signin?callbackUrl=/builder')
   }
 
   const resolvedSearchParams = await searchParams
+  const appId = resolvedSearchParams.appId
   const templateId = resolvedSearchParams.template
 
-  if (templateId) {
-    const template = await prisma.template.findUnique({
-      where: { id: templateId }
+  if (appId) {
+    const app = await prisma.app.findUnique({
+      where: { id: appId }
     })
-
-    if (template) {
-      const project = await prisma.project.create({
-        data: {
-          name: `${template.name} App`,
-          schema: template.schema,
-          userId: session.user.id,
-          templateId: template.id,
-        }
-      })
-      redirect(`/builder/${project.id}`)
+    if (app && app.userId === dbUser.id) {
+      redirect(`/builder/${app.id}`)
     }
   }
 
-  // Create blank project if no template
-  const blankProject = await prisma.project.create({
+  if (templateId) {
+    const template = await prisma.template.findFirst({
+      where: { OR: [{ id: templateId }, { slug: templateId }] }
+    })
+
+    if (template) {
+      const name = `${template.name} App`
+      const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') +
+                   '-' + Date.now().toString(36)
+
+      const app = await prisma.app.create({
+        data: {
+          name,
+          slug,
+          currentSchema: template.schemaDefault as any,
+          userId: dbUser.id,
+          templateId: template.id,
+          schemaVersion: 1,
+          versions: {
+            create: { version: 1, schema: template.schemaDefault as any }
+          }
+        }
+      })
+      redirect(`/builder/${app.id}`)
+    }
+  }
+
+  // Create blank app if no template or appId
+  const name = 'Untitled App'
+  const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') +
+               '-' + Date.now().toString(36)
+  const initialSchema = { components: [] }
+
+  const blankApp = await prisma.app.create({
     data: {
-      name: 'Untitled App',
-      schema: { nodes: [], edges: [] },
-      userId: session.user.id,
+      name,
+      slug,
+      currentSchema: initialSchema,
+      userId: dbUser.id,
+      schemaVersion: 1,
+      versions: {
+        create: { version: 1, schema: initialSchema }
+      }
     }
   })
 
-  redirect(`/builder/${blankProject.id}`)
+  redirect(`/builder/${blankApp.id}`)
 }

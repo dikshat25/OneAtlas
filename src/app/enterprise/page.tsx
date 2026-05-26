@@ -14,7 +14,7 @@ export default function EnterprisePage() {
         Custom domains, SSO, audit logs, and dedicated infrastructure for large organizations that need unparalleled security and performance.
       </p>
       <div className="flex gap-4">
-        <Button size="lg" className="h-14 px-8 text-lg rounded-full bg-gradient-brand text-white">Contact Sales</Button>
+        <Button size="lg" className="h-14 px-8 text-lg rounded-full bg-primary hover:bg-primary/95 text-white">Contact Sales</Button>
         <Button size="lg" variant="outline" className="h-14 px-8 text-lg rounded-full">View Documentation</Button>
       </div>
     </div>

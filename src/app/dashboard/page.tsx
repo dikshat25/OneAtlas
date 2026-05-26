@@ -17,8 +17,8 @@ export default async function DashboardPage() {
     )
   }
 
-  const projects = await prisma.project.findMany({
-    where: { userId: session.user.id },
+  const projects = await prisma.app.findMany({
+    where: { userId: (session.user as any).id },
     orderBy: { updatedAt: 'desc' }
   })
 
@@ -26,7 +26,7 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-page pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-heading">My Apps</h1>
-        <Button asChild className="bg-gradient-brand text-white border-0 hover:-translate-y-0.5 transition-transform">
+        <Button asChild className="bg-primary hover:bg-primary/95 text-white border-0 hover:-translate-y-0.5 transition-transform">
           <Link href="/templates">
             <Plus className="w-4 h-4 mr-2" /> New App
           </Link>

@@ -49,7 +49,7 @@ export function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
       <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-surface shadow-2xl overflow-y-auto flex flex-col transition-transform transform translate-x-0">
         <div className="flex items-center justify-between px-4 py-4 border-b border-border">
           <Link href="/" className="flex items-center gap-2" onClick={onClose}>
-            <div className="w-8 h-8 rounded-lg bg-gradient-brand flex items-center justify-center text-white font-bold text-lg">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg">
               O
             </div>
             <span className="text-xl font-bold text-heading">OneAtlas</span>
@@ -104,7 +104,7 @@ export function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
             <Button variant="outline" className="w-full justify-center" onClick={onClose}>
               Login
             </Button>
-            <Button asChild className="w-full justify-center bg-gradient-brand text-white" onClick={onClose}>
+            <Button asChild className="w-full justify-center bg-primary text-white" onClick={onClose}>
               <Link href="/builder">Start Building</Link>
             </Button>
           </div>
