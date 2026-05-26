@@ -10,7 +10,8 @@ import { BuilderProperties } from '@/components/builder/BuilderProperties'
 import { BuilderChatStrip } from '@/components/builder/BuilderChatStrip'
 import { BuilderStoreInitializer } from '@/components/builder/BuilderStoreInitializer'
 
-export default async function BuilderPage({ params }: { params: { projectId: string } }) {
+export default async function BuilderPage({ params }: { params: Promise<{ projectId: string }> }) {
+  const resolvedParams = await params
   const session = await getServerSession(authOptions)
   
   if (!session || !session.user) {
@@ -18,7 +19,7 @@ export default async function BuilderPage({ params }: { params: { projectId: str
   }
 
   const project = await prisma.project.findUnique({
-    where: { id: params.projectId }
+    where: { id: resolvedParams.projectId }
   })
 
   if (!project || project.userId !== session.user.id) {

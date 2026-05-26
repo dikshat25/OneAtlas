@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { MegaNav } from '@/components/nav/MegaNav'
 import { Footer } from '@/components/layout/Footer'
 import { AuthProvider } from '@/components/providers/AuthProvider'
+import { Toaster } from '@/components/ui/sonner'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -20,12 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased selection:bg-primary/20 selection:text-primary`}>
+      <body className={`${inter.variable} bg-primary text-primary antialiased selection:bg-accent/20 selection:text-accent min-h-screen flex flex-col relative`}>
         <AuthProvider>
           <MegaNav />
           <main className="flex-1 relative">{children}</main>
           <Footer />
         </AuthProvider>
+        <Toaster />
       </body>
     </html>
   )

@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Shield, Zap, Layers, Globe } from 'lucide-react'
+import { ScrollReveal } from '../ui/ScrollReveal'
 
 export function WhyAtlas() {
   const reasons = [
@@ -28,7 +29,7 @@ export function WhyAtlas() {
   ]
 
   return (
-    <section className="py-24 bg-white relative">
+    <section className="py-24 bg-page relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-heading mb-4">Why choose OneAtlas?</h2>
@@ -37,18 +38,21 @@ export function WhyAtlas() {
 
         <div className="grid md:grid-cols-2 gap-8">
           {reasons.map((reason, i) => (
-            <div key={i} className="flex gap-4 p-6 rounded-2xl border border-border bg-secondary hover:bg-white hover:shadow-lg transition-all group">
-              <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                <reason.icon className="w-6 h-6" />
+            <ScrollReveal key={i} delay={i * 0.1}>
+              <div className="flex gap-4 p-6 rounded-2xl border border-border bg-secondary hover:bg-surface hover:shadow-lg transition-all group h-full">
+                <div className="shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                  <reason.icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-heading mb-2">{reason.title}</h3>
+                  <p className="text-body leading-relaxed">{reason.description}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-heading mb-2">{reason.title}</h3>
-                <p className="text-body leading-relaxed">{reason.description}</p>
-              </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
     </section>
   )
 }
+

@@ -58,7 +58,7 @@ export function AtlasForRoles() {
           {roles.map((role, i) => (
             <div 
               key={i} 
-              className="bg-white p-6 rounded-2xl border border-border shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-primary/20 transition-all group cursor-default flex items-start gap-4"
+              className="bg-surface p-6 rounded-2xl border border-border shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-primary/20 transition-all group cursor-default flex items-start gap-4"
             >
               <div className={`p-3 rounded-xl ${role.color} group-hover:bg-primary group-hover:text-white transition-colors shrink-0`}>
                 <role.icon className="w-6 h-6" />
@@ -74,3 +74,4 @@ export function AtlasForRoles() {
     </section>
   )
 }
+

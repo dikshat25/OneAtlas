@@ -48,7 +48,7 @@ export function BuilderSidebar() {
   }
 
   return (
-    <div className="w-64 bg-white border-r border-border flex flex-col h-full shrink-0">
+    <div className="w-64 bg-surface border-r border-border flex flex-col h-full shrink-0">
       <div className="p-4 border-b border-border">
         <h3 className="text-xs font-bold text-heading uppercase tracking-wider mb-2">Component Tree</h3>
         <div className="relative">
@@ -66,3 +66,4 @@ export function BuilderSidebar() {
     </div>
   )
 }
+

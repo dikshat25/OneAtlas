@@ -11,7 +11,7 @@ export default async function DashboardPage() {
   
   if (!session || !session.user) {
     return (
-      <div className="min-h-screen pt-32 px-4 flex justify-center bg-background text-heading font-medium">
+      <div className="min-h-screen pt-32 px-4 flex justify-center bg-page text-heading font-medium">
         Please login to view your apps.
       </div>
     )
@@ -23,7 +23,7 @@ export default async function DashboardPage() {
   })
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-page pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-heading">My Apps</h1>
         <Button asChild className="bg-gradient-brand text-white border-0 hover:-translate-y-0.5 transition-transform">
@@ -58,3 +58,4 @@ export default async function DashboardPage() {
     </div>
   )
 }
+

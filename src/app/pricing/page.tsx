@@ -8,9 +8,10 @@ export default async function PricingPage() {
   const faqs = await prisma.fAQ.findMany({ orderBy: { order: 'asc' } })
 
   return (
-    <div className="pt-20 min-h-screen bg-background">
+    <div className="pt-20 min-h-screen bg-page">
       <PricingPreview plans={plans} />
       <FAQ faqs={faqs} />
     </div>
   )
 }
+

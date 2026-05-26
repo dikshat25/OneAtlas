@@ -4,7 +4,7 @@ import React from 'react'
 import { useBuilderStore } from '@/store/builderStore'
 
 export function BuilderProperties() {
-  const { schema, selectedNodeId } = useBuilderStore()
+  const { schema, selectedNodeId, updateNodeProp } = useBuilderStore()
 
   // Flatten tree to find node
   const findNode = (id: string, nodes: any[]): any => {
@@ -22,7 +22,7 @@ export function BuilderProperties() {
 
   if (!selectedNode) {
     return (
-      <div className="w-72 bg-white border-l border-border flex flex-col h-full shrink-0">
+      <div className="w-72 bg-surface border-l border-border flex flex-col h-full shrink-0">
         <div className="p-4 border-b border-border">
           <h3 className="text-xs font-bold text-heading uppercase tracking-wider">Properties</h3>
         </div>
@@ -34,7 +34,7 @@ export function BuilderProperties() {
   }
 
   return (
-    <div className="w-72 bg-white border-l border-border flex flex-col h-full shrink-0">
+    <div className="w-72 bg-surface border-l border-border flex flex-col h-full shrink-0">
       <div className="p-4 border-b border-border bg-secondary/30">
         <h3 className="text-xs font-bold text-heading uppercase tracking-wider mb-1">Properties</h3>
         <p className="text-sm font-semibold text-primary">{selectedNode.name}</p>
@@ -63,11 +63,21 @@ export function BuilderProperties() {
               {Object.entries(selectedNode.props).map(([key, value]) => (
                 <div key={key}>
                   <label className="block text-xs text-muted mb-1 capitalize">{key}</label>
-                  <input 
-                    type="text" 
-                    defaultValue={String(value)} 
-                    className="w-full bg-white border border-border rounded-md px-3 py-1.5 text-sm text-heading focus:outline-none focus:ring-1 focus:ring-primary"
-                  />
+                  {typeof value === 'boolean' ? (
+                    <button
+                      onClick={() => updateNodeProp(selectedNode.id, key, !value)}
+                      className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${value ? 'bg-primary' : 'bg-border'}`}
+                    >
+                      <span className={`inline-block h-3 w-3 transform rounded-full bg-surface transition-transform ${value ? 'translate-x-5' : 'translate-x-1'}`} />
+                    </button>
+                  ) : (
+                    <input 
+                      type="text" 
+                      value={String(value)}
+                      onChange={(e) => updateNodeProp(selectedNode.id, key, e.target.value)}
+                      className="w-full bg-surface border border-border rounded-md px-3 py-1.5 text-sm text-heading focus:outline-none focus:ring-1 focus:ring-primary"
+                    />
+                  )}
                 </div>
               ))}
             </div>
@@ -91,3 +101,4 @@ export function BuilderProperties() {
     </div>
   )
 }
+

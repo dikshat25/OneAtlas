@@ -5,28 +5,26 @@ import { models } from '@/data/models'
 
 export function ModelsStrip() {
   return (
-    <section className="py-20 bg-secondary overflow-hidden border-y border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-        <h3 className="text-2xl font-bold text-heading mb-2">Powered by every model that matters</h3>
-        <p className="text-body">Switch models per task. Optimize for cost or capability.</p>
+    <section className="py-20 bg-primary border-b border-border overflow-hidden">
+      <div className="layout text-center mb-12">
+        <h2 className="label mb-4">WORKS WITH EVERY MODEL</h2>
+        <p className="text-[18px] text-secondary font-medium">Route to the right model for every task. Optimize for cost or capability.</p>
       </div>
 
       <div className="relative flex overflow-x-hidden group">
-        {/* Scroll gradient masks */}
-        <div className="absolute top-0 left-0 bottom-0 w-32 bg-gradient-to-r from-secondary to-transparent z-10" />
-        <div className="absolute top-0 right-0 bottom-0 w-32 bg-gradient-to-l from-secondary to-transparent z-10" />
+        {/* Scroll gradient masks matching the bg-primary #F5F5EE */}
+        <div className="absolute top-0 left-0 bottom-0 w-32 bg-gradient-to-r from-[#F5F5EE] to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 right-0 bottom-0 w-32 bg-gradient-to-l from-[#F5F5EE] to-transparent z-10 pointer-events-none" />
 
-        <div className="flex space-x-6 animate-scroll-x group-hover:[animation-play-state:paused]">
+        <div className="strip-inner">
           {/* Double the list to create seamless loop */}
-          {[...models, ...models].map((model, i) => (
+          {[...models, ...models, ...models].map((model, i) => (
             <div 
               key={i} 
-              className="flex-shrink-0 flex items-center gap-3 bg-white border border-border px-6 py-3 rounded-full shadow-sm hover:shadow-md transition-shadow cursor-default"
+              className="flex-shrink-0 w-[180px] h-[80px] bg-white border border-[#ECECEC] rounded-[18px] flex flex-col items-center justify-center gap-[4px]"
             >
-              <div className="w-6 h-6 rounded-md bg-muted-bg flex items-center justify-center text-[10px] font-bold text-muted border border-border">
-                {model.provider[0]}
-              </div>
-              <span className="font-semibold text-heading whitespace-nowrap">{model.name}</span>
+              <span className="text-[14px] font-semibold text-[#111111]">{model.name}</span>
+              <span className="text-[11px] font-medium text-[#9CA3AF] uppercase tracking-[0.06em]">{model.provider}</span>
             </div>
           ))}
         </div>

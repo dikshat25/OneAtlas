@@ -17,14 +17,14 @@ export function BuilderCanvas() {
   return (
     <div className="flex-1 bg-secondary overflow-auto p-8 relative flex justify-center">
       <div 
-        className={`w-full max-w-5xl bg-background rounded-lg border shadow-xl flex flex-col overflow-hidden h-[800px] transition-all duration-200 ${
+        className={`w-full max-w-5xl bg-page rounded-lg border shadow-xl flex flex-col overflow-hidden h-[800px] transition-all duration-200 ${
           selectedNodeId === 'root' ? 'ring-2 ring-primary border-primary' : 'border-border'
         }`}
         onClick={() => setSelectedNodeId('root')}
       >
         {/* Mock App Header */}
         <div 
-          className={`h-14 border-b border-border bg-white flex items-center px-6 justify-between ${
+          className={`h-14 border-b border-border bg-surface flex items-center px-6 justify-between ${
             selectedNodeId === 'header' ? 'ring-2 ring-primary border-transparent' : ''
           }`}
           onClick={(e) => { e.stopPropagation(); setSelectedNodeId('header') }}
@@ -47,12 +47,12 @@ export function BuilderCanvas() {
         >
           {/* Main Table Area */}
           <div 
-            className={`flex-1 bg-white rounded-xl border border-border flex flex-col overflow-hidden ${
+            className={`flex-1 bg-surface rounded-xl border border-border flex flex-col overflow-hidden ${
               selectedNodeId === 'contactsTable' ? 'ring-2 ring-primary border-transparent' : ''
             }`}
             onClick={(e) => { e.stopPropagation(); setSelectedNodeId('contactsTable') }}
           >
-            <div className="p-4 border-b border-border flex justify-between items-center bg-background/50">
+            <div className="p-4 border-b border-border flex justify-between items-center bg-page/50">
               <h3 className="font-semibold text-heading">Contacts Directory</h3>
               <div className="flex gap-2">
                 <input type="text" placeholder="Search..." className="border border-border rounded-md px-3 py-1 text-sm outline-none" />
@@ -94,7 +94,7 @@ export function BuilderCanvas() {
             }`}
             onClick={(e) => { e.stopPropagation(); setSelectedNodeId('sidePanel') }}
           >
-            <div className="bg-white rounded-xl border border-border p-5 shadow-sm">
+            <div className="bg-surface rounded-xl border border-border p-5 shadow-sm">
               <h4 className="font-semibold text-heading mb-4">Quick Stats</h4>
               <div className="space-y-4">
                 <div>
@@ -108,7 +108,7 @@ export function BuilderCanvas() {
               </div>
             </div>
             
-            <div className="flex-1 bg-white rounded-xl border border-border p-5 shadow-sm">
+            <div className="flex-1 bg-surface rounded-xl border border-border p-5 shadow-sm">
               <h4 className="font-semibold text-heading mb-4">Recent Activity</h4>
               <div className="space-y-4 relative before:absolute before:inset-y-2 before:left-[11px] before:w-[2px] before:bg-border">
                 {[1, 2, 3].map(i => (
@@ -128,3 +128,4 @@ export function BuilderCanvas() {
     </div>
   )
 }
+

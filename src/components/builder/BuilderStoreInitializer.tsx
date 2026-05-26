@@ -4,13 +4,15 @@ import { useEffect } from 'react'
 import { useBuilderStore } from '@/store/builderStore'
 
 export function BuilderStoreInitializer({ schema, projectId }: { schema: any, projectId: string }) {
-  const setRootNode = useBuilderStore((state) => state.setRootNode)
+  const setSchema = useBuilderStore((state) => state.setSchema)
 
   useEffect(() => {
-    if (schema) {
-      setRootNode(schema)
+    if (schema && Array.isArray(schema.nodes)) {
+      setSchema(schema.nodes)
+    } else if (schema && Array.isArray(schema)) {
+      setSchema(schema)
     }
-  }, [schema, setRootNode])
+  }, [schema, setSchema])
 
   // Optionally store projectId in state or context if needed for auto-saving
   

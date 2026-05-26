@@ -37,7 +37,7 @@ export default function SupportPage() {
             There was an error submitting your ticket.
           </div>
         )}
-        <div className="w-full bg-white p-8 rounded-2xl border border-border shadow-sm flex flex-col items-center gap-6">
+        <div className="w-full bg-surface p-8 rounded-2xl border border-border shadow-sm flex flex-col items-center gap-6">
           <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">
             ?
           </div>
@@ -47,15 +47,15 @@ export default function SupportPage() {
           <div className="w-full space-y-4 text-left">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-heading mb-1">Email</label>
-              <input type="email" id="email" name="email" required className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" />
+              <input type="email" id="email" name="email" required className="w-full h-10 px-3 rounded-md border border-border bg-page text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" />
             </div>
             <div>
               <label htmlFor="subject" className="block text-sm font-medium text-heading mb-1">Subject</label>
-              <input type="text" id="subject" name="subject" required className="w-full h-10 px-3 rounded-md border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" />
+              <input type="text" id="subject" name="subject" required className="w-full h-10 px-3 rounded-md border border-border bg-page text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" />
             </div>
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-heading mb-1">Message</label>
-              <textarea id="message" name="message" required rows={4} className="w-full p-3 rounded-md border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"></textarea>
+              <textarea id="message" name="message" required rows={4} className="w-full p-3 rounded-md border border-border bg-page text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"></textarea>
             </div>
           </div>
 
@@ -67,3 +67,4 @@ export default function SupportPage() {
     </div>
   )
 }
+

@@ -26,7 +26,7 @@ export function Footer() {
             <div className="flex gap-4">
               {/* Mock Social Icons */}
               {[1, 2, 3].map((i) => (
-                <div key={i} className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/40 hover:text-white transition-colors cursor-pointer" />
+                <div key={i} className="w-8 h-8 rounded-full bg-surface/5 hover:bg-surface/10 flex items-center justify-center text-white/40 hover:text-white transition-colors cursor-pointer" />
               ))}
             </div>
           </div>
@@ -87,3 +87,4 @@ export function Footer() {
     </footer>
   )
 }
+

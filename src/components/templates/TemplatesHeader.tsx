@@ -1,15 +1,29 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { useRouter, useSearchParams } from 'next/navigation'
 
-interface TemplatesHeaderProps {
-  searchQuery: string
-  setSearchQuery: (val: string) => void
-}
+export function TemplatesHeader() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  
+  const [localSearch, setLocalSearch] = useState(searchParams.get('q') || '')
 
-export function TemplatesHeader({ searchQuery, setSearchQuery }: TemplatesHeaderProps) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString())
+      if (localSearch) {
+        params.set('q', localSearch)
+      } else {
+        params.delete('q')
+      }
+      router.push(`/templates?${params.toString()}`)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [localSearch, router, searchParams])
+
   return (
     <div className="bg-primary-dark pt-32 pb-16 px-4 sm:px-6 lg:px-8 text-center text-white relative overflow-hidden">
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
@@ -27,12 +41,13 @@ export function TemplatesHeader({ searchQuery, setSearchQuery }: TemplatesHeader
           <Input 
             type="text" 
             placeholder="Search templates (e.g. CRM, Inventory, HR)..." 
-            className="w-full pl-12 pr-4 py-6 bg-white/10 border-white/20 text-white placeholder:text-white/40 rounded-full focus-visible:ring-primary focus-visible:border-primary backdrop-blur-sm"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-12 pr-4 py-6 bg-surface/10 border-white/20 text-white placeholder:text-white/40 rounded-full focus-visible:ring-primary focus-visible:border-primary backdrop-blur-sm"
+            value={localSearch}
+            onChange={(e) => setLocalSearch(e.target.value)}
           />
         </div>
       </div>
     </div>
   )
 }
+
